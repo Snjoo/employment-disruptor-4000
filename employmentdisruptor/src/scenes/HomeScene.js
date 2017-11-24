@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   ScrollView
 } from 'react-native';
 
@@ -22,7 +23,6 @@ export default class HomeScene extends Component {
 		fetch(apiUrl)
 		.then((resp) => resp.json())
 		.then((resp) => {
-			console.log(resp);
 			this.setState({data: resp.data})
 		});
 	}
@@ -34,6 +34,7 @@ export default class HomeScene extends Component {
 				{ this.state.data.map((a, idx) => {
 					return (
 						<View key={idx} style={styles.databox}>
+							<Image style={styles.image} source={{uri: a.image}} />
 							<Text style={styles.boxTitle}>{a.title}</Text>
 							<Text>{a.description}</Text>
 						</View>
@@ -72,5 +73,9 @@ const styles = StyleSheet.create({
   boxTitle: {
 	  fontSize: 20,
 	  padding: 10,
+  },
+  image: {
+	  width: "100%",
+	  height: 200,
   }
 });
