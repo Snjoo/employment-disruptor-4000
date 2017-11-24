@@ -10,7 +10,7 @@ import { Roboto, Lato } from '../fonts'
 
 export default class InfoScene extends Component {
   static navigationOptions = {
-    title: 'Personal information'
+	title: 'Personal information'
   };
   constructor(props) {
     super(props)
@@ -73,16 +73,16 @@ export default class InfoScene extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#3EEAFF'
+	flex: 1,
+	paddingTop: 20,
+	backgroundColor: '#3EEAFF'
   },
   title: {
-    textAlign: 'center',
-    color: '#000000',
-    fontSize: 24,
-    padding: 10,
-    fontFamily: Roboto.bold
+	textAlign: 'center',
+	color: '#000000',
+	fontSize: 24,
+	padding: 10,
+	fontFamily: Roboto.bold
   },
   textInput: {
     marginBottom: 10,
