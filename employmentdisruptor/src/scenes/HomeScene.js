@@ -11,6 +11,18 @@ export default class HomeScene extends Component {
     title: 'Welcome'
   };
   render() {
-    return <Text>Hello, Navigation!</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>Elikkäs test</Text>
+      </View>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#757575'
+  }
+});

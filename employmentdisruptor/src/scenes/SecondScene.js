@@ -11,6 +11,18 @@ export default class SecondScene extends Component {
     title: 'Juuh'
   };
   render() {
-    return <Text>Hello, elikkäs!</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>Juuh kova test</Text>
+      </View>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    backgroundColor: '#585858'
+  }
+});
