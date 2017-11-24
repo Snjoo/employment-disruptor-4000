@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
         domain: 'IT',
         location: 'Helsinki',
         tags: ['programming', 'software', 'it', 'java', 'cobol', 'php', 'javascript'],
-        image: 'https://en.wikipedia.org/wiki/Johann_Sebastian_Bach#/media/File:Johann_Sebastian_Bach.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg'
       },
       {
         author: 'University of Tampere',
