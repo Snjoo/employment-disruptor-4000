@@ -3,5 +3,5 @@ export const Roboto = {
 }
 
 export const Lato = {
-  bold: 'Lato-Regular'
+  regular: 'Lato-Regular'
 }
