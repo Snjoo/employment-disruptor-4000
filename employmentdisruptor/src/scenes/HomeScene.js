@@ -8,21 +8,36 @@ import {
 
 export default class HomeScene extends Component {
   static navigationOptions = {
-    title: 'Mentors'
+	title: 'Mentors'
   };
+  data() {
+	return {
+	  data: [],
+	};
+  }
+
+	componentDidMount() {
+	const apiUrl = 'https://emplr.herokuapp.com/';
+	async fetch(apiUrl)
+	.then((resp) => resp.json())
+	.then((resp) => {
+
+	});
+	}
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Elikkäs test</Text>
-      </View>
-    )
+	var boxes = [];
+	return (
+	  <View style={styles.container}>
+		<View>/View>
+	  </View>
+	)
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#3EEAFF'
+	flex: 1,
+	paddingTop: 20,
+	backgroundColor: '#3EEAFF'
   }
 });
