@@ -6,6 +6,7 @@ import {
   View,
   TextInput
 } from 'react-native';
+import { Roboto, Lato } from '../fonts'
 
 export default class InfoScene extends Component {
   static navigationOptions = {
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000000',
     fontSize: 24,
-    padding: 10
+    padding: 10,
+    fontFamily: Roboto.bold
   },
   textInput: {
     marginBottom: 10,
