@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -11,29 +5,18 @@ import {
   Text,
   View
 } from 'react-native';
+import { TabNavigator } from 'react-navigation';
+import HomeScene from './src/scenes/HomeScene'
+import SecondScene from './src/scenes/SecondScene'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+const EmploymentDisruptor = TabNavigator({
+  Home: { screen: HomeScene },
+  SecondScene: { screen: SecondScene }
 });
 
-export default class App extends Component<{}> {
+export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
+    return <EmploymentDisruptor />;
   }
 }
 
