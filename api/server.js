@@ -52,6 +52,17 @@ app.get('/', (req, res) => {
         location: 'Helsinki',
         tags: ['manager', 'waitress', 'restaurant'],
         image: 'https://c2.staticflickr.com/6/5041/5337695316_0a50575c0a_b.jpg'
+      },
+      {
+        author: 'TakaOvi kiinteistöt',
+        title: 'Re-educating for real estate business',
+        description: `
+          We at TakaOvi kiinteistöt are offering a way for you to get back to your own field of work after immigration. 
+        `,
+        domain: 'Restaurant',
+        location: 'Mäntsälä',
+        tags: ['real estate', 'business'],
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Godrej_Mamurdi_North_Pune.jpg'
       }]
   })
 })
