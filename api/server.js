@@ -70,12 +70,7 @@ app.get('/', (req, res) => {
       {
         author: 'Fuzz IT',
         title: '5 week web development mentoring program',
-        description: `
-          We're looking for software developers to join our mentoring program.
-          On our 5 week mentoring program we'll get you up tp date with latest web development technologies such as
-          React, Redux, AWS, and node.js
-          Get your skills up to date with our awesome mentors!
-      `,
+        description: `We're looking for software developers to join our mentoring program. On our 5 week mentoring program we'll get you up tp date with latest web development technologies such as React, Redux, AWS, and node.js. Get your skills up to date with our awesome mentors!`,
         domain: 'IT',
         location: 'Helsinki',
         tags: ['programming', 'software', 'it', 'java', 'cobol', 'php', 'javascript'],
@@ -84,9 +79,7 @@ app.get('/', (req, res) => {
       {
         author: 'University of Tampere',
         title: 'Re-launch your English-teaching career in Tampere',
-        description: `
-          We are searching for mentorees in Tampere-area Finland to get up to speed in teaching languages.   
-        `,
+        description: `We are searching for mentorees in Tampere-area Finland to get up to speed in teaching languages.`,
         domain: 'Teaching',
         location: 'Tampere',
         tags: ['teaching', 'languages', 'english', 'french'],
@@ -95,10 +88,7 @@ app.get('/', (req, res) => {
       {
         author: 'Cace\'s rakennus',
         title: 'Onboarding to finnish construction work',
-        description: `
-          If you're an experienced construction worker or lay roads like a pro, refresh your skills and learn the Finnish ways
-          of doing construction work by attending our mentoring program!
-        `,
+        description: `If you're an experienced construction worker or lay roads like a pro, refresh your skills and learn the Finnish ways of doing construction work by attending our mentoring program!`,
         domain: 'Construction',
         location: 'Turku',
         tags: ['construction', 'roads', 'physical'],
@@ -107,9 +97,7 @@ app.get('/', (req, res) => {
       {
         author: 'Ravintole Putki',
         title: 'Restaurant professionals ready to start working in Finland',
-        description: `
-          We at Ravintole Putki are offering a way for you to get back to your own field of work after immigration. 
-        `,
+        description: `We at Ravintole Putki are offering a way for you to get back to your own field of work after immigration.`,
         domain: 'Restaurant',
         location: 'Helsinki',
         tags: ['manager', 'waitress', 'restaurant'],
@@ -118,9 +106,7 @@ app.get('/', (req, res) => {
       {
         author: 'TakaOvi kiinteistöt',
         title: 'Re-educating for real estate business',
-        description: `
-          We at TakaOvi kiinteistöt are offering a way for you to get back to your own field of work after immigration. 
-        `,
+        description: `We at TakaOvi kiinteistöt are offering a way for you to get back to your own field of work after immigration.`,
         domain: 'Restaurant',
         location: 'Mäntsälä',
         tags: ['real estate', 'business'],
