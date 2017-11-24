@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
         author: 'Ravintole Putki',
         title: 'Restaurant professionals ready to start working in Finland',
         description: `
-          We at Admiral restaurants are offering a way for you to get back to your own field of work after immigration. 
+          We at Ravintole Putki are offering a way for you to get back to your own field of work after immigration. 
         `,
         domain: 'Restaurant',
         location: 'Helsinki',
