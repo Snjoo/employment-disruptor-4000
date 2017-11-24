@@ -41,6 +41,17 @@ app.get('/', (req, res) => {
         location: 'Turku',
         tags: ['construction', 'roads', 'physical'],
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/US_Navy_080629-N-6477M-095_Builder_3rd_Class_Merlyna_Crank_and_Builder_Constructionman_Irene_L._Reeves%2C_both_assigned_to_Naval_Mobile_Construction_Battalion_%28NMCB%29_3_Det._4%2C_place_trimming_on_birthing_spaces_being_built_for_Afg.jpg/1280px-thumbnail.jpg'
+      },
+      {
+        author: 'Admiral restaurants',
+        title: 'Restaurant professionals ready to start working in Finland',
+        description: `
+          We at Admiral restaurants are offering a way for you to get back to your own field of work after immigration. 
+        `,
+        domain: 'Restaurant',
+        location: 'Helsinki',
+        tags: ['manager', 'waitress', 'restaurant'],
+        image: 'https://c2.staticflickr.com/6/5041/5337695316_0a50575c0a_b.jpg'
       }]
   })
 })
