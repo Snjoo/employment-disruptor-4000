@@ -6,9 +6,9 @@ import {
   View
 } from 'react-native';
 
-export default class SecondScene extends Component {
+export default class InfoScene extends Component {
   static navigationOptions = {
-    title: 'Juuh'
+    title: 'Personal information'
   };
   render() {
     return (

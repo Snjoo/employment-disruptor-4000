@@ -7,17 +7,17 @@ import {
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import HomeScene from './src/scenes/HomeScene'
-import SecondScene from './src/scenes/SecondScene'
+import InfoScene from './src/scenes/InfoScene'
 
 const EmploymentDisruptor = TabNavigator({
   Home: { screen: HomeScene },
-  SecondScene: { screen: SecondScene }
+  InfoScene: { screen: InfoScene }
 });
 
 export default class App extends React.Component {
   render() {
     return (
-      <EmploymentDisruptor />      
+      <EmploymentDisruptor />
     )
   }
 }

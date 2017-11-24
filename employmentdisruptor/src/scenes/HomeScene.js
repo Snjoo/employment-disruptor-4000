@@ -8,7 +8,7 @@ import {
 
 export default class HomeScene extends Component {
   static navigationOptions = {
-    title: 'Welcome'
+    title: 'Mentors'
   };
   render() {
     return (
