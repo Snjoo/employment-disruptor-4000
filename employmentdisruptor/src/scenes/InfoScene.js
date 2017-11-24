@@ -27,7 +27,12 @@ export default class InfoScene extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Personal information</Text>
-        <TextInput style={styles.textInput} />
+        <TextInput
+          style={styles.textInput}
+          placeholder='Name'
+          value={this.state.name}
+          onChangeText={(text) => this.setState({name: text})}
+        />
       </View>
     )
   }
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 10,
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: Lato.regular
   }
 });
