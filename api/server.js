@@ -6,6 +6,7 @@ app.get('/', (req, res) => {
   res.json({
     data: [
       {
+        author: 'Fuzz IT',
         title: '5 week web development mentoring program',
         description: `
           We're looking for software developers to join our mentoring program.
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
         image: 'https://en.wikipedia.org/wiki/Johann_Sebastian_Bach#/media/File:Johann_Sebastian_Bach.jpg'
       },
       {
+        author: 'University of Tampere',
         title: 'Re-launch your English-teaching career in Tampere',
         description: `
           We are searching for mentorees in Tampere-area Finland to get up to speed in teaching languages.   
@@ -29,6 +31,7 @@ app.get('/', (req, res) => {
         image: 'https://c1.staticflickr.com/8/7150/6697055189_f947d7a7a7_z.jpg'
       },
       {
+        author: 'Cace\'s build',
         title: 'Onboarding to finnish construction work',
         description: `
           If you're an experienced construction worker or lay roads like a pro, refresh your skills and learn the Finnish ways
