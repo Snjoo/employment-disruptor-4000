@@ -13,25 +13,17 @@ export default class InfoScene extends Component {
 	title: 'Personal information'
   };
   constructor(props) {
-	super(props)
-	this.state = {
-	  name: '',
-	  city: '',
-	  email: '',
-	  age: '',
-	  education: '',
-	  skills: []
-	}
+    super(props)
+    this.state = {
+      name: '',
+      city: '',
+      email: '',
+      age: '',
+      education: '',
+      skills: ''
+    }
   }
   render() {
-<<<<<<< HEAD
-	return (
-	  <View style={styles.container}>
-		<Text style={styles.title}>Personal information</Text>
-		<TextInput style={styles.textInput} />
-	  </View>
-	)
-=======
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Personal information</Text>
@@ -41,9 +33,41 @@ export default class InfoScene extends Component {
           value={this.state.name}
           onChangeText={(text) => this.setState({name: text})}
         />
+        <TextInput
+          style={styles.textInput}
+          placeholder='City'
+          value={this.state.city}
+          onChangeText={(text) => this.setState({city: text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder='Email'
+          value={this.state.email}
+          keyboardType='email-address'
+          onChangeText={(text) => this.setState({email: text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder='Age'
+          keyboardType='numeric'
+          value={this.state.age}
+          onChangeText={(text) => this.setState({age: text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder='Education'
+          value={this.state.education}
+          onChangeText={(text) => this.setState({education: text})}
+        />
+        <TextInput
+          style={[styles.textInput, styles.multiline]}
+          placeholder='Skills'
+          value={this.state.skills}
+          multiline={true}
+          onChangeText={(text) => this.setState({skills: text})}
+        />
       </View>
     )
->>>>>>> 94ddf1eb50d9c2e49c88e14d5c8428ad3dec7ba7
   }
 }
 
@@ -61,16 +85,6 @@ const styles = StyleSheet.create({
 	fontFamily: Roboto.bold
   },
   textInput: {
-<<<<<<< HEAD
-	marginBottom: 10,
-	borderWidth: 1,
-	borderColor: '#000000',
-	backgroundColor: '#FFFFFF',
-	marginHorizontal: 10,
-	padding: 10,
-	borderRadius: 10,
-	fontSize: 16
-=======
     marginBottom: 10,
     borderWidth: 1,
     borderColor: '#000000',
@@ -80,6 +94,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     fontFamily: Lato.regular
->>>>>>> 94ddf1eb50d9c2e49c88e14d5c8428ad3dec7ba7
+  },
+  multiline: {
+    height: 200
   }
 });
