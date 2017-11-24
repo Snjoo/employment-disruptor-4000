@@ -19,6 +19,16 @@ app.get('/', (req, res) => {
         image: 'https://en.wikipedia.org/wiki/Johann_Sebastian_Bach#/media/File:Johann_Sebastian_Bach.jpg'
       },
       {
+        title: 'Re-launch your English-teaching career in Tampere',
+        description: `
+          We are searching for mentorees in Tampere-area Finland to get up to speed in teaching languages.   
+        `,
+        domain: 'Teaching',
+        location: 'Tampere',
+        tags: ['teaching', 'languages', 'english', 'french'],
+        image: 'https://c1.staticflickr.com/8/7150/6697055189_f947d7a7a7_z.jpg'
+      },
+      {
         title: 'Onboarding to finnish construction work',
         description: `
           If you're an experienced construction worker or lay roads like a pro, refresh your skills and learn the Finnish ways
