@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
         image: 'https://c1.staticflickr.com/8/7150/6697055189_f947d7a7a7_z.jpg'
       },
       {
-        author: 'Cace\'s build',
+        author: 'Cace\'s rakennus',
         title: 'Onboarding to finnish construction work',
         description: `
           If you're an experienced construction worker or lay roads like a pro, refresh your skills and learn the Finnish ways
@@ -43,15 +43,26 @@ app.get('/', (req, res) => {
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/US_Navy_080629-N-6477M-095_Builder_3rd_Class_Merlyna_Crank_and_Builder_Constructionman_Irene_L._Reeves%2C_both_assigned_to_Naval_Mobile_Construction_Battalion_%28NMCB%29_3_Det._4%2C_place_trimming_on_birthing_spaces_being_built_for_Afg.jpg/1280px-thumbnail.jpg'
       },
       {
-        author: 'Admiral restaurants',
+        author: 'Ravintole Putki',
         title: 'Restaurant professionals ready to start working in Finland',
         description: `
-          We at Admiral restaurants are offering a way for you to get back to your own field of work after immigration. 
+          We at Ravintole Putki are offering a way for you to get back to your own field of work after immigration. 
         `,
         domain: 'Restaurant',
         location: 'Helsinki',
         tags: ['manager', 'waitress', 'restaurant'],
         image: 'https://c2.staticflickr.com/6/5041/5337695316_0a50575c0a_b.jpg'
+      },
+      {
+        author: 'TakaOvi kiinteistöt',
+        title: 'Re-educating for real estate business',
+        description: `
+          We at TakaOvi kiinteistöt are offering a way for you to get back to your own field of work after immigration. 
+        `,
+        domain: 'Restaurant',
+        location: 'Mäntsälä',
+        tags: ['real estate', 'business'],
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Godrej_Mamurdi_North_Pune.jpg'
       }]
   })
 })
