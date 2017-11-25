@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
   applicationInfo: {
     textAlign: 'center',
     padding: 10,
+    paddingBottom: 20,
     fontFamily: Lato.regular
   }
 });
