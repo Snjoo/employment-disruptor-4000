@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
         author: 'TakaOvi kiinteistöt',
         title: 'Re-educating for real estate business',
         description: `We at TakaOvi kiinteistöt are offering a way for you to get back to your own field of work after immigration.`,
-        domain: 'Restaurant',
+        domain: 'Real estate',
         location: 'Mäntsälä',
         tags: ['real estate', 'business'],
         image: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Godrej_Mamurdi_North_Pune.jpg'
