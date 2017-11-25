@@ -67,7 +67,8 @@ if(process.env.DEV) {
   applications.push({
     mentoringProgramId: 1,
     applicant: {
-      name: 'Applicant Person 1'
+      name: 'Applicant Person 1',
+      status: 'pending'
     }
   })
 }
@@ -82,7 +83,7 @@ app.get('/', (req, res) => {
 
 app.post('/apply/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  const length = applications.push({ mentoringProgramId, applicant: req.body })
+  const length = applications.push({ mentoringProgramId, applicant: req.body, status: 'pending' })
   res.json({ id: length -1 })
 })
 
