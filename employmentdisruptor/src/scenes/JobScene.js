@@ -6,7 +6,8 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import { Roboto, Lato } from '../fonts'
 
@@ -22,11 +23,11 @@ export default class JobScene extends Component {
   	  email: '',
   	  age: '',
   	  education: '',
-  	  skills: ''
+  	  skills: '',
+      questionAnswer: ''
   	}
   }
   componentWillMount() {
-    console.log(this.props.navigation.state.params)
     storage.load({
     	key: 'personalInformation',
     	autoSync: true,
@@ -45,30 +46,55 @@ export default class JobScene extends Component {
     })
   }
   render() {
-	return (
-	  <ScrollView style={styles.container}>
-      <TouchableHighlight
-        style={styles.saveButton}
-        onPress={() => {}}
-        underlayColor='transparent'
-      >
-        <Text style={styles.saveText}>Submit</Text>
-      </TouchableHighlight>
-	  </ScrollView>
-	)
+    const job = this.props.navigation.state.params.job
+  	return (
+      <View style={styles.container}>
+    	  <ScrollView>
+          <View style={styles.databox}>
+            <Image style={styles.image} source={{uri: job.image}} />
+            <Text style={styles.title}>{job.title}</Text>
+            <Text style={styles.description}>{job.description}</Text>
+            <Text style={styles.description}>Employer: {job.author}</Text>
+            <Text style={styles.description}>Location: {job.location}</Text>
+            <Text style={styles.description}>Domain: {job.domain}</Text>
+            {job.tags && <View style={styles.tagsContainer}>
+              {job.tags.map((tag, idx) => <View key={idx} style={styles.tagContainer}><Text style={styles.tag}>{tag}</Text></View>)}
+            </View>}
+          </View>
+          {job.question && <View>
+              <Text style={styles.questionInfo}>Please, answer the following question:</Text>
+              <TextInput
+          		  style={[styles.textInput, styles.multiline]}
+          		  placeholder={job.question}
+                placeholderTextColor='#000000'
+                autoCorrect={false}
+          		  value={this.state.questionAnswer}
+          		  multiline={true}
+                autoCapitalize='none'
+          		  onChangeText={(text) => this.setState({questionAnswer: text})}
+          		/>
+            </View>
+          }
+          <TouchableHighlight
+            style={styles.saveButton}
+            onPress={() => {}}
+            underlayColor='transparent'
+          >
+            <Text style={styles.saveText}>Submit</Text>
+          </TouchableHighlight>
+    	  </ScrollView>
+      </View>
+  	)
   }
 }
 
 const styles = StyleSheet.create({
   container: {
   	flex: 1,
-  	paddingTop: 20,
   	backgroundColor: '#3EEAFF'
   },
-    title: {
-  	textAlign: 'center',
-  	color: '#000000',
-  	fontSize: 24,
+  title: {
+    fontSize: 20,
   	padding: 10,
   	fontFamily: Roboto.bold
   },
@@ -103,5 +129,63 @@ const styles = StyleSheet.create({
     fontFamily: Roboto.bold,
     color: '#000000',
     fontSize: 20
-  }
+  },
+  description: {
+	  fontFamily: Lato.regular,
+	  paddingHorizontal: 10,
+    marginBottom: 10
+  },
+  databox: {
+    marginTop: 10,
+		paddingBottom: 20,
+		marginBottom: 10,
+		borderWidth: 1,
+		borderColor: '#000000',
+		backgroundColor: '#FFFFFF',
+		marginHorizontal: 10,
+		borderRadius: 10,
+	  overflow: 'hidden'
+  },
+  image: {
+	  flex: 1,
+	  height: 200,
+	  resizeMode: 'cover'
+  },
+  tagsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  tagContainer: {
+    marginTop: 10,
+    height: 25,
+    borderRadius: 13,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    marginLeft: 10,
+  },
+  tag: {
+    color: '#000000'
+  },
+  questionInfo: {
+    fontFamily: Lato.regular,
+    paddingHorizontal: 10,
+    paddingBottom: 10
+  },
+  textInput: {
+  	marginBottom: 10,
+  	borderWidth: 1,
+  	borderColor: '#000000',
+  	backgroundColor: '#FFFFFF',
+  	marginHorizontal: 10,
+  	padding: 10,
+  	borderRadius: 10,
+  	fontSize: 16,
+  	fontFamily: Lato.regular
+  },
+  multiline: {
+	  height: 200
+  },
 });
