@@ -31,9 +31,13 @@ export default class JobScene extends Component {
   componentWillMount() {
     this.loadPersonalInfo()
 
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.loadPersonalInfo()
-    }, 5000);
+    }, 5000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
   }
 
   loadPersonalInfo() {
