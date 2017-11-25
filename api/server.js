@@ -68,18 +68,44 @@ let applications = []
 
 if (process.env.DEV) {
   applications.push({
-    mentoringProgramId: 1,
-    applicant: {
-      name: 'Applicant Person 1',
-      status: 'pending',
-      city: 'Helsinki',
-      email: 'calle@calle.com',
-      age: 21,
-      education: 'Uni',
-      skills: 'javascript',
-      questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
-    }
-  })
+      mentoringProgramId: 5,
+      applicant: {
+        name: 'Johhny Maker',
+        status: 'accepted',
+        city: 'Helsinki',
+        email: 'calle@calle.com',
+        age: 50,
+        education: 'Grand uni',
+        skills: 'business',
+        questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+      }
+    },
+    {
+      mentoringProgramId: 5,
+      applicant: {
+        name: 'Anna Froller',
+        status: 'pending',
+        city: 'Helsinki',
+        email: 'anna@anna.com',
+        age: 21,
+        education: 'Uni',
+        skills: 'salse',
+        questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+      }
+    },
+    {
+      mentoringProgramId: 5,
+      applicant: {
+        name: 'Cirstop gundi',
+        status: 'rejected',
+        city: 'Turku',
+        email: 'chr@tu.com',
+        age: 30,
+        education: 'Uni',
+        skills: 'javascript',
+        questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
+      }
+    })
 }
 
 const toMentoringProgramId = R.compose(parseInt, R.path(['params', 'mentoringProgramId']))
@@ -109,15 +135,17 @@ const toApplication = ({ question }) => ({ name, city, email, age, education, sk
   const selectedStatuses = R.map(s => R.assoc('selected', s.action === status, s), statuses)
   return `
     <div class="applicant">
-      ${name ? `<div class="applicant-name"><span class="bold">Name:</span> ${name}</div>` : ''} 
-      ${city ? `<div class="applicant-city"><span class="bold">City:</span> ${city}</div>` : ''} 
-      ${email ? `<div class="applicant-email"><span class="bold">Email:</span> ${email}</div>` : ''} 
-      ${age ? `<div class="applicant-age"><span class="bold">Age:</span> ${age}</div>` : ''} 
-      ${education ? `<div class="applicant-education"><span class="bold">Education:</span> ${education}</div>` : ''} 
-      ${skills ? `<div class="applicant-skills"><span class="bold">Skills:</span> ${skills}</div>` : ''} 
-      ${question && questionAnswer ? `<div class="applicant-question bold">${question}</div>` : ''}
-      ${question && questionAnswer ? `<div class="applicant-answer">${questionAnswer}</div>` : ''}
-      <div class="applicant-status">Status: ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}</div>
+      <div class='applicant-details'>
+        ${name ? `<div class="applicant-name"><span class="bold">Name:</span> ${name}</div>` : ''} 
+        ${city ? `<div class="applicant-city"><span class="bold">City:</span> ${city}</div>` : ''} 
+        ${email ? `<div class="applicant-email"><span class="bold">Email:</span> ${email}</div>` : ''} 
+        ${age ? `<div class="applicant-age"><span class="bold">Age:</span> ${age}</div>` : ''} 
+        ${education ? `<div class="applicant-education"><span class="bold">Education:</span> ${education}</div>` : ''} 
+        ${skills ? `<div class="applicant-skills"><span class="bold">Skills:</span> ${skills}</div>` : ''} 
+        ${question && questionAnswer ? `<div class="applicant-question bold">${question}</div>` : ''}
+        ${question && questionAnswer ? `<div class="applicant-answer">${questionAnswer}</div>` : ''}
+        <div class="applicant-status">Status: ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}</div>
+      </div>
     </div>
   `
 }
@@ -146,9 +174,10 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
         .main-content {max-width: 1200px; margin: 0 auto;}
         .status-link {padding: 5px }
         .status-link.selected { background-color: #6e6f6e; border-radius: 5px;}
-        .applicants {display: flex}
-        .applicant {border-radius: 5px; width: 50%; background-color: #ebe1f5; padding: 10px; margin: 2px;}
-        .applicant div {margin-bottom: 5px}
+        .applicants {display: flex; flex-wrap: wrap;}
+        .applicant {width: 50%; padding: 2px;}
+        .applicant-details {border-radius: 5px; background-color: #ebe1f5; padding: 10px;}
+        .applicant div:not(:last-child) {margin-bottom: 5px}
         .bold {font-weight: bold}
       </style>
       <body>
@@ -184,6 +213,6 @@ app.get('/application-status/:applicationId', (req, res) => {
   const { applicationId } = req.params
   const statusText = R.path([applicationId, 'applicant', 'status'], applications)
   const statusEmoji = R.compose(R.prop('icon'), R.find(R.propEq('action', statusText)))(statuses)
-  res.send({ status:  `${statusText} ${statusEmoji}`})
+  res.send({ status: `${statusText} ${statusEmoji}` })
 })
 app.listen(port, () => console.log(`Started on port ${port}`))
