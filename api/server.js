@@ -17,7 +17,7 @@ const mentoringPrograms = [
     domain: 'IT',
     location: 'Helsinki',
     tags: ['programming', 'software', 'it', 'java', 'cobol', 'php', 'javascript'],
-    image: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/DEF_CON_17_CTF_competition.jpg/1599px-DEF_CON_17_CTF_competition.jpg',
     question: 'Please write a short introduction of your technical background'
   },
   {
