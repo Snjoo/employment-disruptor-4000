@@ -27,11 +27,20 @@ export default class JobScene extends Component {
       questionAnswer: ''
   	}
   }
+
   componentWillMount() {
-    storage.load({
-    	key: 'personalInformation',
-    	autoSync: true,
-    	syncInBackground: true,
+    this.loadPersonalInfo()
+
+    setInterval(() => {
+      this.loadPersonalInfo()
+    }, 5000);
+  }
+
+  loadPersonalInfo() {
+    return storage.load({
+      key: 'personalInformation',
+      autoSync: true,
+      syncInBackground: true,
     }).then(ret => {
       this.setState({
         name: ret.name,
@@ -42,8 +51,41 @@ export default class JobScene extends Component {
         skills: ret.skills
       })
     }).catch(err => {
-    	console.warn(err.message);
+      console.warn(err.message);
     })
+  }
+
+  sendApplication() {
+    const job = this.props.navigation.state.params.job
+    if ((job.question && this.state.questionAnswer.length < 1) ||
+        (this.state.name.length < 1) ||
+        (this.state.city.length < 1) ||
+        (this.state.email.length < 1) ||
+        (this.state.age.length < 1) ||
+        (this.state.education.length < 1) ||
+        (this.state.skills.length < 1)
+    ) {
+      this.setState({errorMessage: true})
+    } else {
+      this.setState({errorMessage: false})
+      const apiUrl = 'https://emplr.herokuapp.com/apply/' + job.id;
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.state.name,
+          city: this.state.city,
+          email: this.state.email,
+          age: this.state.age,
+          education: this.state.education,
+          skills: this.state.skills,
+          questionAnswer: this.state.questionAnswer
+        })
+      })
+    }
   }
   render() {
     const job = this.props.navigation.state.params.job
@@ -75,12 +117,14 @@ export default class JobScene extends Component {
           		/>
             </View>
           }
+          {this.state.errorMessage && job.question ? <Text style={styles.errorMessage}>Please answer the question and fill in your information</Text>
+          : this.state.errorMessage ? <Text style={styles.errorMessage}>Please fill in your information</Text> : null}
           <TouchableHighlight
             style={styles.saveButton}
-            onPress={() => {}}
+            onPress={this.sendApplication.bind(this)}
             underlayColor='transparent'
           >
-            <Text style={styles.saveText}>Submit</Text>
+            <Text style={styles.saveText}>Apply</Text>
           </TouchableHighlight>
     	  </ScrollView>
       </View>
@@ -188,4 +232,9 @@ const styles = StyleSheet.create({
   multiline: {
 	  height: 200
   },
+  errorMessage: {
+    color: 'red',
+    textAlign: 'center',
+    padding: 10
+  }
 });
