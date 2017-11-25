@@ -97,7 +97,7 @@ const statuses = [
 ]
 
 const toStatusChangeLink = applicantId => ({ icon, selected, action }) =>
-  `<a class="status-link ${selected ? 'selected' : ''}" href='#' onclick="window.submitStatusChange(${applicantId}, '${action}')">${icon}</a>`
+  `<a class="status-link ${selected ? 'selected' : ''}" href='#' onclick="event.preventDefault(); window.submitStatusChange(${applicantId}, '${action}')">${icon}</a>`
 
 const toApplication = ({ name, status }, applicantId) => {
   const selectedStatuses = R.map(s => R.assoc('selected', s.action === status, s), statuses)
