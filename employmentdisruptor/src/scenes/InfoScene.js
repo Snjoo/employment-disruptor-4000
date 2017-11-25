@@ -68,39 +68,51 @@ export default class InfoScene extends Component {
   		  style={styles.textInput}
   		  placeholder='Name'
   		  value={this.state.name}
+        autoCorrect={false}
+        autoCapitalize='words'
   		  onChangeText={(text) => this.setState({name: text})}
   		/>
   		<TextInput
   		  style={styles.textInput}
   		  placeholder='City'
   		  value={this.state.city}
+        autoCorrect={false}
+        autoCapitalize='words'
   		  onChangeText={(text) => this.setState({city: text})}
   		/>
   		<TextInput
   		  style={styles.textInput}
   		  placeholder='Email'
   		  value={this.state.email}
+        autoCorrect={false}
   		  keyboardType='email-address'
+        autoCapitalize='none'
   		  onChangeText={(text) => this.setState({email: text})}
   		/>
   		<TextInput
   		  style={styles.textInput}
   		  placeholder='Age'
   		  keyboardType='numeric'
+        autoCorrect={false}
   		  value={this.state.age}
+        autoCapitalize='none'
   		  onChangeText={(text) => this.setState({age: text})}
   		/>
   		<TextInput
   		  style={styles.textInput}
   		  placeholder='Education'
+        autoCorrect={false}
   		  value={this.state.education}
+        autoCapitalize='none'
   		  onChangeText={(text) => this.setState({education: text})}
   		/>
   		<TextInput
   		  style={[styles.textInput, styles.multiline]}
   		  placeholder='Skills'
+        autoCorrect={false}
   		  value={this.state.skills}
   		  multiline={true}
+        autoCapitalize='none'
   		  onChangeText={(text) => this.setState({skills: text})}
   		/>
       <TouchableHighlight
