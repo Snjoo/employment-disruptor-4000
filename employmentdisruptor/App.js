@@ -6,14 +6,14 @@ import {
   View
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
-import HomeScene from './src/scenes/HomeScene'
+import HomeNav from './src/scenes/HomeNav'
 import InfoScene from './src/scenes/InfoScene'
 import Storage from 'react-native-storage'
 import { AsyncStorage } from 'react-native'
 import { Roboto, Lato } from './src/fonts'
 
 const EmploymentDisruptor = TabNavigator({
-  Home: { screen: HomeScene },
+  Home: { screen: HomeNav },
   InfoScene: { screen: InfoScene }
 }, {
   swipeEnabled: true,
