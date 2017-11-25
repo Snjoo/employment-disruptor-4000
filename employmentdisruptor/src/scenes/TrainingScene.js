@@ -68,8 +68,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: Lato.regular,
-    padding: 10,
-    paddingTop: 0
+    padding: 10
   },
   databox: {
     marginTop: 10,
