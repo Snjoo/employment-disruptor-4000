@@ -182,6 +182,8 @@ app.post('/application-status', (req, res) => {
 
 app.get('/application-status/:applicationId', (req, res) => {
   const { applicationId } = req.params
-  res.send({ status: R.path([applicationId, 'applicant', 'status'], applications) })
+  const statusText = R.path([applicationId, 'applicant', 'status'], applications)
+  const statusEmoji = R.compose(R.prop('icon'), R.find(R.propEq('action', statusText)))(statuses)
+  res.send({ status:  `${statusText} ${statusEmoji}`})
 })
 app.listen(port, () => console.log(`Started on port ${port}`))
