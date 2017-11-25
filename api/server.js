@@ -86,7 +86,7 @@ app.get('/', (req, res) => {
 
 app.post('/apply/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  const length = applications.push({ mentoringProgramId, applicant: R.merge(req.body, {status: 'pending'}) })
+  const length = applications.push({ mentoringProgramId, applicant: R.merge(req.body, { status: 'pending' }) })
   res.json({ id: length - 1 })
 })
 
@@ -158,13 +158,13 @@ app.get('/applications/:mentoringProgramId', (req, res) => {
 })
 
 app.post('/application-status', (req, res) => {
-  const {status, applicantId} = req.body
-  applications = R.over(R.lensPath([applicantId, 'applicant']), R.assoc('status', status),applications)
+  const { status, applicantId } = req.body
+  applications = R.over(R.lensPath([applicantId, 'applicant']), R.assoc('status', status), applications)
   res.send('OK')
 })
 
-app.get('/application-status/:applicationId',(req, res) => {
-  const { applicationId} = req.params
-  res.send({status: R.path([applicationId, 'applicant', 'status'], applications)})
+app.get('/application-status/:applicationId', (req, res) => {
+  const { applicationId } = req.params
+  res.send({ status: R.path([applicationId, 'applicant', 'status'], applications) })
 })
 app.listen(port, () => console.log(`Started on port ${port}`))
