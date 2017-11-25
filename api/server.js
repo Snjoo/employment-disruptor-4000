@@ -59,9 +59,20 @@ const mentoringPrograms = [
     question: 'Describe us your sales philosophy'
   }]
 
+const applications = []
+
 app.get('/', (req, res) => {
   res.json({
     data: mentoringPrograms
   })
 })
+
+app.post('/apply/:jobId', (req, res) => {
+  const { jobId } = req.params
+  applications.push({ jobId, applicant: req.body })
+  res.json({
+    status: '👌'
+  })
+})
+
 app.listen(port, () => console.log(`Started on port ${port}`))
