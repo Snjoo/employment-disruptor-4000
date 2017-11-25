@@ -72,13 +72,11 @@ export default class HomeScene extends Component {
   }
   scoreData(data) {
     const skills = this.state.skills.split(/[, \n]+/);
-    console.log(skills);
     data.score = skills.reduce((score, skill) => {
         return score + data.tags.reduce((score, tag) => {
             return score + (this.fuzzyMatchStrings(skill, tag) ? 1 : 0);
         }, 0)
     }, 0)
-    console.log(this.state.skills, data.tags, data.score);
     return data;
   }
 
