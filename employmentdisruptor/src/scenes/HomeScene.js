@@ -14,24 +14,27 @@ import { Roboto, Lato } from '../fonts'
 
 export default class HomeScene extends Component {
   static navigationOptions = {
-       title: 'Mentors',
-     header: null
+    title: 'Mentors',
+    header: null
   };
   constructor(props) {
-      super(props)
-      this.state = {
-          data: [],
-    refreshing: false
-      }
+    super(props)
+    this.state = {
+      data: [],
+      refreshing: false
+    }
   }
   componentWillMount() {
     this.loadPersonalInfo()
     this.fetchData()
 
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.loadPersonalInfo()
-      .then(() => this.sortData())
+        .then(() => this.sortData())
     }, 5000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
   loadPersonalInfo() {
     return storage.load({
@@ -52,12 +55,12 @@ export default class HomeScene extends Component {
     })
   }
   fetchData() {
-    this.setState({refreshing: true})
+    this.setState({ refreshing: true })
     const apiUrl = 'https://emplr.herokuapp.com/';
     fetch(apiUrl)
-    .then((resp) => resp.json())
-    .then((resp) => this.setState({data: resp.data, refreshing: false}))
-    .then(() => this.sortData())
+      .then((resp) => resp.json())
+      .then((resp) => this.setState({ data: resp.data, refreshing: false }))
+      .then(() => this.sortData())
   }
   sortData() {
     if (this.state.data.length === 0) {
@@ -68,67 +71,75 @@ export default class HomeScene extends Component {
       return b.score - a.score;
     });
 
-    this.setState({data: data, refreshing: false});
+    this.setState({ data: data, refreshing: false });
   }
+
   scoreData(data) {
-    const skills = this.state.skills.split(/[, \n]+/);
+    const skills = this.state.skills.toLowerCase().split(/[, \n]+/);
+    const tags = data.tags.map((tag) => tag.toLowerCase());
+
     data.score = skills.reduce((score, skill) => {
-        return score + data.tags.reduce((score, tag) => {
-            return score + (this.fuzzyMatchStrings(skill, tag) ? 1 : 0);
-        }, 0)
-    }, 0)
+      return score + tags.reduce((score, tag) => {
+        return score + (this.fuzzyMatchStrings(skill, tag) ? 1 : 0);
+      }, 0)
+    }, 0);
+
+    if (data.location.toLowerCase() === this.state.city.toLowerCase()) {
+      data.score++;
+    }
+
     return data;
   }
 
   fuzzyMatchStrings(key, str) {
-      const strlen = str.length;
-      const keylen = key.length;
+    const strlen = str.length;
+    const keylen = key.length;
 
-      if (keylen === 0) {
-        return false;
+    if (keylen === 0) {
+      return false;
+    }
+    if (keylen > strlen) {
+      return false;
+    }
+    if (keylen === strlen) {
+      return key === str;
+    }
+    for (let i = 0, j = 0; i < keylen; i++) {
+      var nch = key.charCodeAt(i);
+      while (j < strlen) {
+        if (str.charCodeAt(j++) === nch) {
+          break;
+        }
       }
-      if (keylen > strlen) {
-          return false;
-      }
-      if (keylen === strlen) {
-          return key === str;
-      }
-      for (let i = 0, j = 0; i < keylen; i++) {
-          var nch = key.charCodeAt(i);
-          while (j < strlen) {
-              if (str.charCodeAt(j++) === nch) {
-                  break;
-              }
-          }
-          return false;
-      }
-      return true;
+      return false;
+    }
+    return true;
   }
   openJob(job) {
     this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Job', params: { job: job } }))
   }
   render() {
     return (
-        <View style={styles.container}>
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.fetchData.bind(this)}
-                />
-             }
-            >
-              { this.state.data.map((a, idx) => {
-                  return (
-                      <TouchableHighlight underlayColor='transparent' key={idx} style={styles.databox} onPress={() => this.openJob(a)}>
-                        <View>
-                            <Image style={styles.image} source={{uri: a.image}} />
-                            <Text style={styles.boxTitle}>{a.title}</Text>
-                            <Text style={styles.description}>{a.description}</Text>
-                        </View>
-                      </TouchableHighlight>
-                  )
-              }
+      <View style={styles.container}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.fetchData.bind(this)}
+            />
+          }
+        >
+          {this.state.data.map((a, idx) => {
+            return (
+              <TouchableHighlight underlayColor='transparent' key={idx} style={styles.databox} onPress={() => this.openJob(a)}>
+                <View>
+                  <Image style={styles.image} source={{ uri: a.image }} />
+                  <Text style={styles.boxTitle}>{a.title}</Text>
+                  <Text style={styles.description}>{a.description}</Text>
+                </View>
+              </TouchableHighlight>
+            )
+          }
           )}
         </ScrollView>
       </View>
