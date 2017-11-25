@@ -153,7 +153,7 @@ app.get('/applications/:mentoringProgramId', (req, res) => {
     toApplicationListPage,
     R.merge({ applicants: toApplicants(applications) }),
     R.objOf('mentoringProgram'),
-    R.nth(0),
+    R.find(R.propEq('id', mentoringProgramId)),
   )(mentoringPrograms)
 })
 
