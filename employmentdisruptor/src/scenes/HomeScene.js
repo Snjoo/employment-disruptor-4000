@@ -8,6 +8,7 @@ import {
   ScrollView,
   RefreshControl
 } from 'react-native';
+import { Roboto, Lato } from '../fonts'
 
 export default class HomeScene extends Component {
   static navigationOptions = {
@@ -49,7 +50,7 @@ export default class HomeScene extends Component {
 						<View key={idx} style={styles.databox}>
 							<Image style={styles.image} source={{uri: a.image}} />
 							<Text style={styles.boxTitle}>{a.title}</Text>
-							<Text>{a.description}</Text>
+							<Text style={styles.description}>{a.description}</Text>
 						</View>
 					)
 				}
@@ -70,25 +71,31 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: '#000000',
 		fontSize: 24,
-		padding: 10
+		padding: 10,
+    fontFamily: Roboto.bold
 	},
 	databox: {
 		paddingBottom: 20,
-		paddingTop: 20,
 		marginBottom: 10,
 		borderWidth: 1,
 		borderColor: '#000000',
 		backgroundColor: '#FFFFFF',
 		marginHorizontal: 10,
-		padding: 10,
 		borderRadius: 10,
+    overflow: 'hidden'
   },
   boxTitle: {
 	  fontSize: 20,
 	  padding: 10,
+    fontFamily: Roboto.bold
+  },
+  description: {
+    fontFamily: Lato.regular,
+    paddingHorizontal: 10,
   },
   image: {
-	  width: "100%",
+	  flex: 1,
 	  height: 200,
+    resizeMode: 'cover'
   }
 });
