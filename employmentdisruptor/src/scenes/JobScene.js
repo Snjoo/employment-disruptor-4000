@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image
 } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import { Roboto, Lato } from '../fonts'
 
 export default class JobScene extends Component {
@@ -139,6 +140,9 @@ export default class JobScene extends Component {
       .then(res => this.saveApplications(job.id, res.id))
     }
   }
+  openTraining(skill) {
+    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Training', params: { skill: skill } }))
+  }
   render() {
     const job = this.props.navigation.state.params.job
   	return (
@@ -152,7 +156,16 @@ export default class JobScene extends Component {
             <Text style={styles.description}>Location: {job.location}</Text>
             <Text style={styles.description}>Domain: {job.domain}</Text>
             {job.tags && <View style={styles.tagsContainer}>
-              {job.tags.map((tag, idx) => <View key={idx} style={styles.tagContainer}><Text style={styles.tag}>{tag}</Text></View>)}
+              {job.tags.map((tag, idx) =>
+                <TouchableHighlight
+                  key={idx}
+                  style={styles.tagContainer}
+                  onPress={() => this.openTraining(tag)}
+                  underlayColor='transparent'
+                >
+                  <Text style={styles.tag}>{tag}</Text>
+                </TouchableHighlight>
+              )}
             </View>}
           </View>
           {job.question && <View>
