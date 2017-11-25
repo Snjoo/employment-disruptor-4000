@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
         domain: 'IT',
         location: 'Helsinki',
         tags: ['programming', 'software', 'it', 'java', 'cobol', 'php', 'javascript'],
-        image: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg',
+        question: 'Please write a short introduction of your technical background'
       },
       {
         id: 2,
@@ -23,7 +24,8 @@ app.get('/', (req, res) => {
         domain: 'Teaching',
         location: 'Tampere',
         tags: ['teaching', 'languages', 'english', 'french'],
-        image: 'https://c1.staticflickr.com/8/7150/6697055189_f947d7a7a7_z.jpg'
+        image: 'https://c1.staticflickr.com/8/7150/6697055189_f947d7a7a7_z.jpg',
+        question: 'What motivates you in teaching?'
       },
       {
         id: 3,
@@ -43,7 +45,8 @@ app.get('/', (req, res) => {
         domain: 'Restaurant',
         location: 'Helsinki',
         tags: ['manager', 'waitress', 'restaurant'],
-        image: 'https://c2.staticflickr.com/6/5041/5337695316_0a50575c0a_b.jpg'
+        image: 'https://c2.staticflickr.com/6/5041/5337695316_0a50575c0a_b.jpg',
+        question: 'What do you expect from our mentoring program?'
       },
       {
         id: 5,
@@ -53,7 +56,8 @@ app.get('/', (req, res) => {
         domain: 'Real estate',
         location: 'Mäntsälä',
         tags: ['real estate', 'business'],
-        image: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Godrej_Mamurdi_North_Pune.jpg'
+        image: 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Godrej_Mamurdi_North_Pune.jpg',
+        question: 'Describe us your sales philosophy'
       }]
   })
 })
