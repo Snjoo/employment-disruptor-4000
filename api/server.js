@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
+const R = require('ramda')
+const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
-
+app.use(bodyParser.json())
 const mentoringPrograms = [
   {
     id: 1,
@@ -61,18 +63,47 @@ const mentoringPrograms = [
 
 const applications = []
 
+const toMentoringProgramId = R.compose(parseInt, R.path(['params', 'mentoringProgramId']))
+
 app.get('/', (req, res) => {
   res.json({
     data: mentoringPrograms
   })
 })
 
-app.post('/apply/:jobId', (req, res) => {
-  const { jobId } = req.params
-  applications.push({ jobId, applicant: req.body })
-  res.json({
-    status: '👌'
-  })
+app.post('/apply/:mentoringProgramId', (req, res) => {
+  const mentoringProgramId = toMentoringProgramId(req)
+  const length = applications.push({ mentoringProgramId, applicant: req.body })
+  res.json({ id: length -1 })
+})
+
+const toApplication = ({ name }) => `<p>${name}</p>`
+
+const toApplicationListPage = ({ applicants, mentoringProgram }) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${mentoringProgram.author} Mentoring program</title>
+      </head>
+      <body>
+        <ul>
+          ${R.compose(R.join(''), R.map(toApplication))(applicants)}
+        </ul>
+      </body>
+    </html>
+  `
+}
+app.get('/applications/:mentoringProgramId', (req, res) => {
+  const mentoringProgramId = toMentoringProgramId(req)
+  const toApplicants = R.compose(R.pluck('applicant'), R.filter(R.propEq('mentoringProgramId', mentoringProgramId)))
+  R.compose(
+    R.bind(res.send, res),
+    toApplicationListPage,
+    R.merge({ applicants: toApplicants(applications) }),
+    R.objOf('mentoringProgram'),
+    R.nth(0),
+  )(mentoringPrograms)
 })
 
 app.listen(port, () => console.log(`Started on port ${port}`))
