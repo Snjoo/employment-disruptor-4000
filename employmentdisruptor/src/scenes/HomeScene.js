@@ -5,7 +5,8 @@ import {
   Text,
   View,
   Image,
-  ScrollView
+  ScrollView,
+  RefreshControl
 } from 'react-native';
 
 export default class HomeScene extends Component {
@@ -16,21 +17,33 @@ export default class HomeScene extends Component {
 		super(props)
 		this.state = {
 			data: [],
+      refreshing: false
 		}
 	}
 	componentWillMount() {
-		const apiUrl = 'https://emplr.herokuapp.com/';
+		this.fetchData()
+	}
+  fetchData() {
+    this.setState({refreshing: true})
+    const apiUrl = 'https://emplr.herokuapp.com/';
 		fetch(apiUrl)
 		.then((resp) => resp.json())
 		.then((resp) => {
-			this.setState({data: resp.data})
+			this.setState({data: resp.data, refreshing: false})
 		});
-	}
+  }
   render() {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Latest stuff</Text>
-			<ScrollView>
+			<ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.fetchData.bind(this)}
+          />
+        }
+      >
 				{ this.state.data.map((a, idx) => {
 					return (
 						<View key={idx} style={styles.databox}>
