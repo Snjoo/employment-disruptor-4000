@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 
 const port = process.env.PORT || 3000
 app.use(bodyParser.json())
+
+const mapIndexed = R.addIndex(R.map)
+
 const mentoringPrograms = [
   {
     id: 1,
@@ -61,9 +64,9 @@ const mentoringPrograms = [
     question: 'Describe us your sales philosophy'
   }]
 
-const applications = []
+let applications = []
 
-if(process.env.DEV) {
+if (process.env.DEV) {
   applications.push({
     mentoringProgramId: 1,
     applicant: {
@@ -83,11 +86,28 @@ app.get('/', (req, res) => {
 
 app.post('/apply/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  const length = applications.push({ mentoringProgramId, applicant: req.body, status: 'pending' })
-  res.json({ id: length -1 })
+  const length = applications.push({ mentoringProgramId, applicant: R.merge(req.body, {status: 'pending'}) })
+  res.json({ id: length - 1 })
 })
 
-const toApplication = ({ name }) => `<li>${name}</li>`
+const statuses = [
+  { action: 'accepted', icon: '✅' },
+  { action: 'pending', icon: '🏵' },
+  { action: 'rejected', icon: '🎈' }
+]
+
+const toStatusChangeLink = applicantId => ({ icon, selected, action }) =>
+  `<a class="status-link ${selected ? 'selected' : ''}" href='#' onclick="window.submitStatusChange(${applicantId}, '${action}')">${icon}</a>`
+
+const toApplication = ({ name, status }, applicantId) => {
+  const selectedStatuses = R.map(s => R.assoc('selected', s.action === status, s), statuses)
+  return `
+    <li>
+      ${name} 
+      ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}
+    </li>
+  `
+}
 
 const toApplicationListPage = ({ applicants, mentoringProgram }) => {
   const title = `${mentoringProgram.author} Mentoring program`
@@ -97,18 +117,28 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
       <head>
         <title>${title}</title>
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+        <script>
+          window.submitStatusChange = (applicantId, status) => {
+            axios.post('/application-status', {applicantId, status})
+            .then(() => location.reload())
+          }
+        </script>
       </head>
       <style>
         body { font-family: "Open Sans" }
+        a {text-decoration: none}
         h2 {text-align: center}
         ul {margin: 0; padding: 0}
         .main-content {max-width: 1200px; margin: 0 auto;}
+        .status-link {padding: 5px }
+        .status-link.selected {background-color: #e6e6e6}
       </style>
       <body>
         <h2>${title}</h2>
         <div class="main-content">
           <ul>
-            ${R.compose(R.join(''), R.map(toApplication))(applicants)}
+            ${R.compose(R.join(''), mapIndexed(toApplication))(applicants)}
           </ul>
         </div>
       </body>
@@ -127,4 +157,9 @@ app.get('/applications/:mentoringProgramId', (req, res) => {
   )(mentoringPrograms)
 })
 
+app.post('/application-status', (req, res) => {
+  const {status, applicantId} = req.body
+  applications = R.over(R.lensPath([applicantId, 'applicant']), R.assoc('status', status),applications)
+  res.send('OK')
+})
 app.listen(port, () => console.log(`Started on port ${port}`))
