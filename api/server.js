@@ -73,10 +73,8 @@ app.get('/', (req, res) => {
 
 app.post('/apply/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  applications.push({ mentoringProgramId, applicant: req.body })
-  res.json({
-    status: '👌'
-  })
+  const id = applications.push({ mentoringProgramId, applicant: req.body })
+  res.json({ id })
 })
 
 const toApplication = ({ name }) => `<p>${name}</p>`
