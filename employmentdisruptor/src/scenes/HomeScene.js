@@ -6,8 +6,10 @@ import {
   View,
   Image,
   ScrollView,
-  RefreshControl
+  RefreshControl,
+  TouchableHighlight
 } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import { Roboto, Lato } from '../fonts'
 
 export default class HomeScene extends Component {
@@ -33,6 +35,9 @@ export default class HomeScene extends Component {
 			this.setState({data: resp.data, refreshing: false})
 		});
   }
+  openJob(job) {
+    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Job' }))
+  }
   render() {
 	return (
 		<View style={styles.container}>
@@ -47,11 +52,13 @@ export default class HomeScene extends Component {
       >
 				{ this.state.data.map((a, idx) => {
 					return (
-						<View key={idx} style={styles.databox}>
-							<Image style={styles.image} source={{uri: a.image}} />
-							<Text style={styles.boxTitle}>{a.title}</Text>
-							<Text style={styles.description}>{a.description}</Text>
-						</View>
+						<TouchableHighlight underlayColor='transparent' key={idx} style={styles.databox} onPress={(a) => this.openJob(a)}>
+              <View>
+  							<Image style={styles.image} source={{uri: a.image}} />
+  							<Text style={styles.boxTitle}>{a.title}</Text>
+  							<Text style={styles.description}>{a.description}</Text>
+              </View>
+						</TouchableHighlight>
 					)
 				}
 			)}
