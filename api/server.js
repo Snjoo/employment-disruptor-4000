@@ -86,7 +86,7 @@ app.post('/apply/:mentoringProgramId', (req, res) => {
   res.json({ id: length -1 })
 })
 
-const toApplication = ({ name }) => `<p>${name}</p>`
+const toApplication = ({ name }) => `<li>${name}</li>`
 
 const toApplicationListPage = ({ applicants, mentoringProgram }) => {
   const title = `${mentoringProgram.author} Mentoring program`
@@ -99,13 +99,17 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
       </head>
       <style>
         body { font-family: "Open Sans" }
+        h2 {text-align: center}
         ul {margin: 0; padding: 0}
+        .main-content {max-width: 1200px; margin: 0 auto;}
       </style>
       <body>
         <h2>${title}</h2>
-        <ul>
-          ${R.compose(R.join(''), R.map(toApplication))(applicants)}
-        </ul>
+        <div class="main-content">
+          <ul>
+            ${R.compose(R.join(''), R.map(toApplication))(applicants)}
+          </ul>
+        </div>
       </body>
     </html>
   `
