@@ -8,6 +8,8 @@ app.use(bodyParser.json())
 
 const mapIndexed = R.addIndex(R.map)
 
+const udacity = require('./udacity.json')
+
 const mentoringPrograms = [
   {
     id: 1,
@@ -214,5 +216,16 @@ app.get('/application-status/:applicationId', (req, res) => {
   const statusText = R.path([applicationId, 'applicant', 'status'], applications)
   const statusEmoji = R.compose(R.prop('icon'), R.find(R.propEq('action', statusText)))(statuses)
   res.send({ status: `${statusText} ${statusEmoji}` })
+})
+
+app.get('/training/:query', (req, res) => {
+  const hasSearchTem = R.propSatisfies(R.contains('React'))
+
+  R.compose(
+    R.bind(res.send, res),
+    R.map(R.pick(['title', 'subtitle', 'image', 'syllabus', 'homepage'])),
+    R.filter(R.anyPass(R.map(hasSearchTem, ['title', 'subtitle']))),
+    R.prop('courses')
+  )(udacity)
 })
 app.listen(port, () => console.log(`Started on port ${port}`))
