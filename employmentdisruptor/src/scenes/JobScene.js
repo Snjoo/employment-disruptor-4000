@@ -75,7 +75,6 @@ export default class JobScene extends Component {
 const styles = StyleSheet.create({
   container: {
   	flex: 1,
-  	paddingTop: 20,
   	backgroundColor: '#3EEAFF'
   },
   title: {
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   databox: {
+    marginTop: 10,
 		paddingBottom: 20,
 		marginBottom: 10,
 		borderWidth: 1,
