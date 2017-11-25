@@ -79,7 +79,6 @@ app.post('/apply/:mentoringProgramId', (req, res) => {
 const toApplication = ({ name }) => `<p>${name}</p>`
 
 const toApplicationListPage = ({ applicants, mentoringProgram }) => {
-  console.log(applicants[0])
   return `
     <!DOCTYPE html>
     <html>
