@@ -24,20 +24,66 @@ export default class JobScene extends Component {
   	  age: '',
   	  education: '',
   	  skills: '',
-      questionAnswer: ''
+      questionAnswer: '',
+      applications: [],
+      applicationStatus: ''
   	}
   }
 
   componentWillMount() {
     this.loadPersonalInfo()
+    this.loadApplications()
 
     this.intervalId = setInterval(() => {
       this.loadPersonalInfo()
     }, 5000)
   }
 
+  componentDidMount() {
+    this.getApplicationStatus()
+  }
+
   componentWillUnmount() {
     clearInterval(this.intervalId)
+  }
+
+  getApplicationStatus() {
+    const job = this.props.navigation.state.params.job
+    this.state.applications.map(application => {
+      if (application.jobId === job.id) {
+        const apiUrl = 'https://emplr.herokuapp.com/application-status/' + application.applicationId;
+        fetch(apiUrl)
+        .then(res => res.json())
+        .then(res => this.setState({applicationStatus: res.status}))
+      }
+    })
+  }
+
+  loadApplications() {
+    return storage.load({
+      key: 'applications',
+      autoSync: true,
+      syncInBackground: true,
+    }).then(ret => {
+      return this.setState({
+        applications: [...ret.applications]
+      })
+    })
+    .then(ret => this.getApplicationStatus())
+    .catch(err => {
+      console.warn(err.message);
+    })
+  }
+
+  saveApplications(jobId, applicationId) {
+    this.loadApplications()
+    storage.save({
+    	key: 'applications',
+    	data: {
+    		applications: [...this.state.applications, {jobId: jobId, applicationId: applicationId}]
+    	},
+    	expires: null
+    });
   }
 
   loadPersonalInfo() {
@@ -89,6 +135,8 @@ export default class JobScene extends Component {
           questionAnswer: this.state.questionAnswer
         })
       })
+      .then(res => res.json())
+      .then(res => this.saveApplications(job.id, res.id))
     }
   }
   render() {
@@ -121,15 +169,19 @@ export default class JobScene extends Component {
           		/>
             </View>
           }
-          {this.state.errorMessage && job.question ? <Text style={styles.errorMessage}>Please answer the question and fill in your information</Text>
-          : this.state.errorMessage ? <Text style={styles.errorMessage}>Please fill in your information</Text> : null}
-          <TouchableHighlight
-            style={styles.saveButton}
-            onPress={this.sendApplication.bind(this)}
-            underlayColor='transparent'
-          >
-            <Text style={styles.saveText}>Apply</Text>
-          </TouchableHighlight>
+          {this.state.applicationStatus ? <Text style={styles.applicationInfo}>You have applied! Your application status is: {this.state.applicationStatus}</Text> :
+          <View>
+            {this.state.errorMessage && job.question ? <Text style={styles.errorMessage}>Please answer the question and fill in your information</Text>
+            : this.state.errorMessage ? <Text style={styles.errorMessage}>Please fill in your information</Text> : null}
+            <TouchableHighlight
+              style={styles.saveButton}
+              onPress={this.sendApplication.bind(this)}
+              underlayColor='transparent'
+            >
+              <Text style={styles.saveText}>Apply</Text>
+            </TouchableHighlight>
+          </View>
+        }
     	  </ScrollView>
       </View>
   	)
@@ -239,6 +291,12 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: 'red',
     textAlign: 'center',
-    padding: 10
+    padding: 10,
+    fontFamily: Lato.regular
+  },
+  applicationInfo: {
+    textAlign: 'center',
+    padding: 10,
+    fontFamily: Lato.regular
   }
 });
