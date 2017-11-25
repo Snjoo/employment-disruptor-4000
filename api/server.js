@@ -219,7 +219,7 @@ app.get('/application-status/:applicationId', (req, res) => {
 })
 
 app.get('/training/:query', (req, res) => {
-  const hasSearchTem = R.propSatisfies(R.contains('React'))
+  const hasSearchTem = R.propSatisfies(R.compose(R.contains(req.params.query), R.toLower))
 
   R.compose(
     R.bind(res.send, res),
