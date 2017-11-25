@@ -46,27 +46,28 @@ export default class JobScene extends Component {
   }
   render() {
     const job = this.props.navigation.state.params.job
-    console.log(job)
   	return (
-  	  <ScrollView style={styles.container}>
-        <View style={styles.databox}>
-          <Image style={styles.image} source={{uri: job.image}} />
-          <Text style={styles.title}>{job.title}</Text>
-          <Text style={styles.description}>{job.description}</Text>
-          <Text style={styles.description}>Location: {job.location}</Text>
-          <Text style={styles.description}>Domain: {job.domain}</Text>
-          {job.tags && <View style={styles.tagsContainer}>
-            {job.tags.map((tag, idx) => <View key={idx} style={styles.tagContainer}><Text style={styles.tag}>{tag}</Text></View>)}
-          </View>}
-        </View>
-        <TouchableHighlight
-          style={styles.saveButton}
-          onPress={() => {}}
-          underlayColor='transparent'
-        >
-          <Text style={styles.saveText}>Submit</Text>
-        </TouchableHighlight>
-  	  </ScrollView>
+      <View style={styles.container}>
+    	  <ScrollView>
+          <View style={styles.databox}>
+            <Image style={styles.image} source={{uri: job.image}} />
+            <Text style={styles.title}>{job.title}</Text>
+            <Text style={styles.description}>{job.description}</Text>
+            <Text style={styles.description}>Location: {job.location}</Text>
+            <Text style={styles.description}>Domain: {job.domain}</Text>
+            {job.tags && <View style={styles.tagsContainer}>
+              {job.tags.map((tag, idx) => <View key={idx} style={styles.tagContainer}><Text style={styles.tag}>{tag}</Text></View>)}
+            </View>}
+          </View>
+          <TouchableHighlight
+            style={styles.saveButton}
+            onPress={() => {}}
+            underlayColor='transparent'
+          >
+            <Text style={styles.saveText}>Submit</Text>
+          </TouchableHighlight>
+    	  </ScrollView>
+      </View>
   	)
   }
 }
