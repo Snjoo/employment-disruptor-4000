@@ -89,13 +89,20 @@ app.post('/apply/:mentoringProgramId', (req, res) => {
 const toApplication = ({ name }) => `<p>${name}</p>`
 
 const toApplicationListPage = ({ applicants, mentoringProgram }) => {
+  const title = `${mentoringProgram.author} Mentoring program`
   return `
     <!DOCTYPE html>
     <html>
       <head>
-        <title>${mentoringProgram.author} Mentoring program</title>
+        <title>${title}</title>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
       </head>
+      <style>
+        body { font-family: "Open Sans" }
+        ul {margin: 0; padding: 0}
+      </style>
       <body>
+        <h2>${title}</h2>
         <ul>
           ${R.compose(R.join(''), R.map(toApplication))(applicants)}
         </ul>
