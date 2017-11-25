@@ -162,4 +162,9 @@ app.post('/application-status', (req, res) => {
   applications = R.over(R.lensPath([applicantId, 'applicant']), R.assoc('status', status),applications)
   res.send('OK')
 })
+
+app.get('/application-status/:applicationId',(req, res) => {
+  const { applicationId} = req.params
+  res.send({status: R.path([applicationId, 'applicant', 'status'], applications)})
+})
 app.listen(port, () => console.log(`Started on port ${port}`))
