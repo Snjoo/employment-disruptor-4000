@@ -6,8 +6,6 @@ const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000
 app.use(bodyParser.json())
 
-const mapIndexed = R.addIndex(R.map)
-
 const udacity = require('./udacity.json')
 
 const mentoringPrograms = [
@@ -70,42 +68,36 @@ let applications = []
 
 applications.push({
     mentoringProgramId: 5,
-    applicant: {
-      name: 'Johhny Maker',
-      status: 'accepted',
-      city: 'Helsinki',
-      email: 'calle@calle.com',
-      age: 50,
-      education: 'Grand uni',
-      skills: 'business',
-      questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
-    }
+    name: 'Johhny Maker',
+    status: 'accepted',
+    city: 'Helsinki',
+    email: 'calle@calle.com',
+    age: 50,
+    education: 'Grand uni',
+    skills: 'business',
+    questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
   },
   {
     mentoringProgramId: 5,
-    applicant: {
-      name: 'Anna Froller',
-      status: 'pending',
-      city: 'Helsinki',
-      email: 'anna@anna.com',
-      age: 21,
-      education: 'Uni',
-      skills: 'salse',
-      questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
-    }
+    name: 'Anna Froller',
+    status: 'pending',
+    city: 'Helsinki',
+    email: 'anna@anna.com',
+    age: 21,
+    education: 'Uni',
+    skills: 'salse',
+    questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
   },
   {
     mentoringProgramId: 5,
-    applicant: {
-      name: 'Cirstop gundi',
-      status: 'rejected',
-      city: 'Turku',
-      email: 'chr@tu.com',
-      age: 30,
-      education: 'Uni',
-      skills: 'javascript',
-      questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
-    }
+    name: 'Cirstop gundi',
+    status: 'rejected',
+    city: 'Turku',
+    email: 'chr@tu.com',
+    age: 30,
+    education: 'Uni',
+    skills: 'javascript',
+    questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
   })
 
 
@@ -119,7 +111,7 @@ app.get('/', (req, res) => {
 
 app.post('/apply/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  const length = applications.push({ mentoringProgramId, applicant: R.merge(req.body, { status: 'pending' }) })
+  const length = applications.push(R.merge(req.body, { status: 'pending', mentoringProgramId }))
   res.json({ id: length - 1 })
 })
 
@@ -132,8 +124,9 @@ const statuses = [
 const toStatusChangeLink = applicantId => ({ icon, selected, action }) =>
   `<a class="status-link ${selected ? 'selected' : ''}" href='#' onclick="event.preventDefault(); window.submitStatusChange(${applicantId}, '${action}')">${icon}</a>`
 
-const toApplication = ({ question }) => ({ name, city, email, age, education, skills, questionAnswer, status }, applicantId) => {
+const toApplication = ({ question, id }) => ({ name, city, email, age, education, skills, questionAnswer, status }) => {
   const selectedStatuses = R.map(s => R.assoc('selected', s.action === status, s), statuses)
+  const applicationId = R.findIndex(R.where({ mentoringProgramId: R.equals(id), email: R.equals(email) }), applications)
   return `
     <div class="applicant">
       <div class='applicant-details'>
@@ -145,7 +138,7 @@ const toApplication = ({ question }) => ({ name, city, email, age, education, sk
         ${skills ? `<div class="applicant-skills"><span class="bold">Skills:</span> ${skills}</div>` : ''} 
         ${question && questionAnswer ? `<div class="applicant-question bold">${question}</div>` : ''}
         ${question && questionAnswer ? `<div class="applicant-answer">${questionAnswer}</div>` : ''}
-        <div class="applicant-status">Status: ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}</div>
+        <div class="applicant-status">Status: ${R.compose(R.join(''), R.map(toStatusChangeLink(applicationId)))(selectedStatuses)}</div>
       </div>
     </div>
   `
@@ -185,7 +178,7 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
         <h2>${title}</h2>
         <div class="main-content">
           <div class="applicants">
-            ${R.compose(R.join(''), mapIndexed(toApplication(mentoringProgram)))(applicants)}
+            ${R.compose(R.join(''), R.map(toApplication(mentoringProgram)))(applicants)}
           </div>
         </div>
       </body>
@@ -194,7 +187,7 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
 }
 app.get('/applications/:mentoringProgramId', (req, res) => {
   const mentoringProgramId = toMentoringProgramId(req)
-  const toApplicants = R.compose(R.pluck('applicant'), R.filter(R.propEq('mentoringProgramId', mentoringProgramId)))
+  const toApplicants = R.filter(R.propEq('mentoringProgramId', mentoringProgramId))
   R.compose(
     R.bind(res.send, res),
     toApplicationListPage,
@@ -206,13 +199,13 @@ app.get('/applications/:mentoringProgramId', (req, res) => {
 
 app.post('/application-status', (req, res) => {
   const { status, applicantId } = req.body
-  applications = R.over(R.lensPath([applicantId, 'applicant']), R.assoc('status', status), applications)
+  applications = R.over(R.lensPath([applicantId]), R.assoc('status', status), applications)
   res.send('OK')
 })
 
 app.get('/application-status/:applicationId', (req, res) => {
   const { applicationId } = req.params
-  const statusText = R.path([applicationId, 'applicant', 'status'], applications)
+  const statusText = R.path([applicationId, 'status'], applications)
   const statusEmoji = R.compose(R.prop('icon'), R.find(R.propEq('action', statusText)))(statuses)
   res.send({ status: `${statusText} ${statusEmoji}` })
 })
