@@ -71,7 +71,13 @@ if (process.env.DEV) {
     mentoringProgramId: 1,
     applicant: {
       name: 'Applicant Person 1',
-      status: 'pending'
+      status: 'pending',
+      city: 'Helsinki',
+      email: 'calle@calle.com',
+      age: 21,
+      education: 'Uni',
+      skills: 'javascript',
+      questionAnswer: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum'
     }
   })
 }
@@ -99,13 +105,20 @@ const statuses = [
 const toStatusChangeLink = applicantId => ({ icon, selected, action }) =>
   `<a class="status-link ${selected ? 'selected' : ''}" href='#' onclick="event.preventDefault(); window.submitStatusChange(${applicantId}, '${action}')">${icon}</a>`
 
-const toApplication = ({ name, status }, applicantId) => {
+const toApplication = ({ question }) => ({ name, city, email, age, education, skills, questionAnswer, status }, applicantId) => {
   const selectedStatuses = R.map(s => R.assoc('selected', s.action === status, s), statuses)
   return `
-    <li>
-      ${name} 
-      ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}
-    </li>
+    <div class="applicant">
+      ${name ? `<div class="applicant-name"><span class="bold">Name:</span> ${name}</div>` : ''} 
+      ${city ? `<div class="applicant-city"><span class="bold">City:</span> ${city}</div>` : ''} 
+      ${email ? `<div class="applicant-email"><span class="bold">Email:</span> ${email}</div>` : ''} 
+      ${age ? `<div class="applicant-age"><span class="bold">Age:</span> ${age}</div>` : ''} 
+      ${education ? `<div class="applicant-education"><span class="bold">Education:</span> ${education}</div>` : ''} 
+      ${skills ? `<div class="applicant-skills"><span class="bold">Skills:</span> ${skills}</div>` : ''} 
+      ${question && questionAnswer ? `<div class="applicant-question bold">${question}</div>` : ''}
+      ${question && questionAnswer ? `<div class="applicant-answer">${questionAnswer}</div>` : ''}
+      <div class="applicant-status">Status: ${R.compose(R.join(''), R.map(toStatusChangeLink(applicantId)))(selectedStatuses)}</div>
+    </div>
   `
 }
 
@@ -126,20 +139,24 @@ const toApplicationListPage = ({ applicants, mentoringProgram }) => {
         </script>
       </head>
       <style>
+        * {box-sizing: border-box}
         body { font-family: "Open Sans" }
         a {text-decoration: none}
         h2 {text-align: center}
-        ul {margin: 0; padding: 0}
         .main-content {max-width: 1200px; margin: 0 auto;}
         .status-link {padding: 5px }
-        .status-link.selected {background-color: #e6e6e6}
+        .status-link.selected { background-color: #6e6f6e; border-radius: 5px;}
+        .applicants {display: flex}
+        .applicant {border-radius: 5px; width: 50%; background-color: #ebe1f5; padding: 10px; margin: 2px;}
+        .applicant div {margin-bottom: 5px}
+        .bold {font-weight: bold}
       </style>
       <body>
         <h2>${title}</h2>
         <div class="main-content">
-          <ul>
-            ${R.compose(R.join(''), mapIndexed(toApplication))(applicants)}
-          </ul>
+          <div class="applicants">
+            ${R.compose(R.join(''), mapIndexed(toApplication(mentoringProgram)))(applicants)}
+          </div>
         </div>
       </body>
     </html>
