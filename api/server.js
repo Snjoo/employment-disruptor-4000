@@ -63,6 +63,15 @@ const mentoringPrograms = [
 
 const applications = []
 
+if(process.env.DEV) {
+  applications.push({
+    mentoringProgramId: 1,
+    applicant: {
+      name: 'Applicant Person 1'
+    }
+  })
+}
+
 const toMentoringProgramId = R.compose(parseInt, R.path(['params', 'mentoringProgramId']))
 
 app.get('/', (req, res) => {
