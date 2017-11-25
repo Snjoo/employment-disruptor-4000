@@ -14,7 +14,8 @@ import { Roboto, Lato } from '../fonts'
 
 export default class HomeScene extends Component {
   static navigationOptions = {
-	   title: 'Mentors'
+	   title: 'Mentors',
+     header: null
   };
 	constructor(props) {
 		super(props)
