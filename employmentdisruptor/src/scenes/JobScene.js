@@ -23,7 +23,8 @@ export default class JobScene extends Component {
   	  email: '',
   	  age: '',
   	  education: '',
-  	  skills: ''
+  	  skills: '',
+      questionAnswer: ''
   	}
   }
   componentWillMount() {
@@ -53,12 +54,27 @@ export default class JobScene extends Component {
             <Image style={styles.image} source={{uri: job.image}} />
             <Text style={styles.title}>{job.title}</Text>
             <Text style={styles.description}>{job.description}</Text>
+            <Text style={styles.description}>Employer: {job.author}</Text>
             <Text style={styles.description}>Location: {job.location}</Text>
             <Text style={styles.description}>Domain: {job.domain}</Text>
             {job.tags && <View style={styles.tagsContainer}>
               {job.tags.map((tag, idx) => <View key={idx} style={styles.tagContainer}><Text style={styles.tag}>{tag}</Text></View>)}
             </View>}
           </View>
+          {job.question && <View>
+              <Text style={styles.questionInfo}>Please, answer the following question:</Text>
+              <TextInput
+          		  style={[styles.textInput, styles.multiline]}
+          		  placeholder={job.question}
+                placeholderTextColor='#000000'
+                autoCorrect={false}
+          		  value={this.state.questionAnswer}
+          		  multiline={true}
+                autoCapitalize='none'
+          		  onChangeText={(text) => this.setState({questionAnswer: text})}
+          		/>
+            </View>
+          }
           <TouchableHighlight
             style={styles.saveButton}
             onPress={() => {}}
@@ -152,5 +168,24 @@ const styles = StyleSheet.create({
   },
   tag: {
     color: '#000000'
-  }
+  },
+  questionInfo: {
+    fontFamily: Lato.regular,
+    paddingHorizontal: 10,
+    paddingBottom: 10
+  },
+  textInput: {
+  	marginBottom: 10,
+  	borderWidth: 1,
+  	borderColor: '#000000',
+  	backgroundColor: '#FFFFFF',
+  	marginHorizontal: 10,
+  	padding: 10,
+  	borderRadius: 10,
+  	fontSize: 16,
+  	fontFamily: Lato.regular
+  },
+  multiline: {
+	  height: 200
+  },
 });
