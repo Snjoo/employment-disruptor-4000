@@ -26,6 +26,7 @@ export default class JobScene extends Component {
   	}
   }
   componentWillMount() {
+    console.log(this.props.navigation.state.params)
     storage.load({
     	key: 'personalInformation',
     	autoSync: true,
@@ -46,7 +47,6 @@ export default class JobScene extends Component {
   render() {
 	return (
 	  <ScrollView style={styles.container}>
-  		<Text style={styles.title}>Job</Text>
       <TouchableHighlight
         style={styles.saveButton}
         onPress={() => {}}

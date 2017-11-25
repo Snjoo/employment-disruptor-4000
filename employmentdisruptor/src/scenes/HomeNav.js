@@ -12,7 +12,6 @@ export default StackNavigator({
   }
 }, {
   navigationOptions: {
-    gesturesEnabled: true,
-    header: null
+    gesturesEnabled: true
   }
 })

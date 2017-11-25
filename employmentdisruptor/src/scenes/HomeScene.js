@@ -14,7 +14,7 @@ import { Roboto, Lato } from '../fonts'
 
 export default class HomeScene extends Component {
   static navigationOptions = {
-	title: 'Mentors'
+	   title: 'Mentors'
   };
 	constructor(props) {
 		super(props)
@@ -36,7 +36,7 @@ export default class HomeScene extends Component {
 		});
   }
   openJob(job) {
-    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Job' }))
+    this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Job', params: { job: job } }))
   }
   render() {
 	return (
@@ -52,7 +52,7 @@ export default class HomeScene extends Component {
       >
 				{ this.state.data.map((a, idx) => {
 					return (
-						<TouchableHighlight underlayColor='transparent' key={idx} style={styles.databox} onPress={(a) => this.openJob(a)}>
+						<TouchableHighlight underlayColor='transparent' key={idx} style={styles.databox} onPress={() => this.openJob(a)}>
               <View>
   							<Image style={styles.image} source={{uri: a.image}} />
   							<Text style={styles.boxTitle}>{a.title}</Text>
