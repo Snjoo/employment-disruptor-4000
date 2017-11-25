@@ -106,12 +106,16 @@ export default class HomeScene extends Component {
     }
     for (let i = 0, j = 0; i < keylen; i++) {
       var nch = key.charCodeAt(i);
+      found = false;
       while (j < strlen) {
         if (str.charCodeAt(j++) === nch) {
+          found = true;
           break;
         }
       }
-      return false;
+      if (!found) {
+        return false;
+      }
     }
     return true;
   }
