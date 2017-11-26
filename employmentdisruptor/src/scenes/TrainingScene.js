@@ -34,7 +34,6 @@ export default class TrainingScene extends Component {
     }
   }
   render() {
-    console.log(this.state.trainings)
     const skill = this.props.navigation.state.params.skill
   	return (
   	  <ScrollView
